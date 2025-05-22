@@ -66,11 +66,12 @@ def merge_layers(gpkg_paths, layer_name, output_path):
 
 # === 6. Exécution ===
 
+folder = "./bage-le-chatel"
 out_epsg = 2154
-gcp_folder = "./gcp"
-in_vectors_folder = "./vecteurs/in"
-out_vectors_folder = "./vecteurs/out"
-in_rasters_folder = "./rasters/in"
+gcp_folder = folder + "/gcp"
+in_vectors_folder = folder + "/vecteurs/in"
+out_vectors_folder = folder + "/vecteurs/out"
+in_rasters_folder = folder + "/rasters/in"
 parcels_layer_name = "parcelles"
 buildings_layer_name = "batiments"
 sections = ["A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2"]
