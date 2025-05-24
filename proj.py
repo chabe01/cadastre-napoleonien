@@ -67,6 +67,7 @@ def merge_layers(gpkg_paths, layer_name, output_path):
 # === 6. Exécution ===
 
 folder = "./bage-le-chatel"
+folder = "./saint-cyr-sur-menthon"
 out_epsg = 2154
 gcp_folder = folder + "/gcp"
 in_vectors_folder = folder + "/vecteurs/in"
@@ -74,6 +75,7 @@ out_vectors_folder = folder + "/vecteurs/out"
 in_rasters_folder = folder + "/rasters/in"
 parcels_layer_name = "parcelles"
 buildings_layer_name = "batiments"
+section_layer_name = "section"
 sections = ["A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2"]
 
 # Créer le dossier s'il n'existe pas
@@ -81,11 +83,13 @@ os.makedirs(out_vectors_folder, exist_ok=True)
 
 # Géoréférencer les vecteurs issues de la numérisation des rasters qui ont été géoréférencés et dont les paramètres sont fournis par les GCPs
 for section in sections:
+    output_path = f"{out_vectors_folder}/section_{section}_epsg_{out_epsg}.gpkg"
+
     georeference_vector(
         gpkg_path=f"{in_vectors_folder}/{section}.gpkg",
         layer_name=parcels_layer_name,
         points_path=f"{gcp_folder}/{section}.jpg.points",
-        output_path=f"{out_vectors_folder}/epsg_{out_epsg}_{section}_{parcels_layer_name}.gpkg",
+        output_path=output_path,
         epsg=out_epsg
     )
 
@@ -93,29 +97,44 @@ for section in sections:
         gpkg_path=f"{in_vectors_folder}/{section}.gpkg",
         layer_name=buildings_layer_name,
         points_path=f"{gcp_folder}/{section}.jpg.points",
-        output_path=f"{out_vectors_folder}/epsg_{out_epsg}_{section}_{buildings_layer_name}.gpkg",
+        output_path=output_path,
+        epsg=out_epsg
+    )
+
+    georeference_vector(
+        gpkg_path=f"{in_vectors_folder}/{section}.gpkg",
+        layer_name=section_layer_name,
+        points_path=f"{gcp_folder}/{section}.jpg.points",
+        output_path=output_path,
         epsg=out_epsg
     )
 
 # Fusionner les couches géoréférencées
-gpkg_paths = [f"{out_vectors_folder}/epsg_{out_epsg}_{section}_{parcels_layer_name}.gpkg" for section in sections]
+gpkg_paths = [f"{out_vectors_folder}/section_{section}_epsg_{out_epsg}.gpkg" for section in sections]
+output_path = f"{out_vectors_folder}/all_sections_epsg_{out_epsg}.gpkg"
 merge_layers(
     gpkg_paths=gpkg_paths,
     layer_name=parcels_layer_name,
-    output_path=f"{out_vectors_folder}/epsg_{out_epsg}_{parcels_layer_name}_merged.gpkg"
+    output_path=output_path
 )
-gpkg_paths = [f"{out_vectors_folder}/epsg_{out_epsg}_{section}_{buildings_layer_name}.gpkg" for section in sections]
+
 merge_layers(
     gpkg_paths=gpkg_paths,
     layer_name=buildings_layer_name,
-    output_path=f"{out_vectors_folder}/epsg_{out_epsg}_{buildings_layer_name}_merged.gpkg"
+    output_path=output_path
 )
 
+merge_layers(
+    gpkg_paths=gpkg_paths,
+    layer_name=section_layer_name,
+    output_path=output_path
+)
 
+# section = "C2"
 # georeference_vector(
-#     gpkg_path="./vecteurs/C2.gpkg",
-#     layer_name="parcelles",
-#     points_path="./gcp/C2.jpg.points",
-#     output_path="./vecteurs/epsg_{epsg}_C2.gpkg"
+#     gpkg_path=f"{in_vectors_folder}/{section}.gpkg",
+#     layer_name="parcelles_a",
+#     points_path=f"{gcp_folder}/C2_to_C2A.jpg.points",
+#     output_path=f"{out_vectors_folder}/{section}_C2A.gpkg",
+#     epsg=4326
 # )
-
