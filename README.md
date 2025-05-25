@@ -4,6 +4,7 @@
 Ce dépôt contient des données issues du cadastre napoléonien pour les communes suivantes :
 - **Bâgé-le-Châtel**
 - **Saint-Cyr-sur-Menthon**
+- **Saint-Laurent-sur-Saône**
 
 ## Contenu du dépôt
 
