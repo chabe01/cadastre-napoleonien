@@ -68,6 +68,7 @@ def merge_layers(gpkg_paths, layer_name, output_path):
 
 folder = "./bage-le-chatel"
 folder = "./saint-cyr-sur-menthon"
+folder = "./saint-laurent-sur-saone"
 out_epsg = 2154
 gcp_folder = folder + "/gcp"
 in_vectors_folder = folder + "/vecteurs/in"
@@ -77,6 +78,7 @@ parcels_layer_name = "parcelles"
 buildings_layer_name = "batiments"
 section_layer_name = "section"
 sections = ["A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2"]
+sections = ["A1"]
 
 # Créer le dossier s'il n'existe pas
 os.makedirs(out_vectors_folder, exist_ok=True)
