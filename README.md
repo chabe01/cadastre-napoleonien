@@ -10,6 +10,7 @@ Ce dépôt contient des données issues du cadastre napoléonien pour les commun
 Le dépôt comprend les fichiers suivants :
 - `bage-le-chatel/` : Dossier contenant les données pour la commune de Bâgé-le-Châtel
 - `saint-cyr-sur-menthon/` : Dossier contenant les données pour la commune de Saint-Cyr-sur-Menthon
+- `saint-laurent-sur-saone/` : Dossier contenant les données pour la commune de Saint-Laurent-sur-Saône
 
 Chaque dossier peut inclure des fichiers vectoriels (par exemple, au format GeoJSON ou Shapefile) représentant les parcelles cadastrales, les bâtiments, les voies, etc.
 
